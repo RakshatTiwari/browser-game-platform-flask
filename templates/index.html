@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<!-- Landing Page Container -->
+<div class="menu-container">
+
+    <!-- Game Title -->
+    <h1 class="game-title">Knight Warrior</h1>
+
+    <!-- Main Actions -->
+    <div class="menu-buttons">
+        <a href="{{ url_for('game') }}" class="menu-btn">Play Game</a>
+        <a href="{{ url_for('leaderboard') }}" class="menu-btn">Leaderboard</a>
+        <a href="{{ url_for('login') }}" class="menu-btn">Login</a>
+        <a href="{{ url_for('register') }}" class="menu-btn secondary">
+            Register (New Player)
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

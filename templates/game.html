@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <!-- Load game JavaScript -->
+    <script src="{{ url_for('static', filename='game.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+
+<!-- Game Container -->
+<div class="game-container">
+
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Hidden form to submit score to Flask -->
+    <!-- This avoids APIs and uses normal POST (CS50-friendly) -->
+    <form id="scoreForm" method="POST" action="{{ url_for('save_score') }}">
+        <input type="hidden" name="score" id="finalScore">
+    </form>
+
+</div>
+
+{% endblock %}

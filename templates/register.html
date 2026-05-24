@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<!-- Registration Page Container -->
+<div class="form-container">
+
+    <h2>Register</h2>
+
+    <!-- Registration Form -->
+    <form method="POST" action="{{ url_for('register') }}">
+
+        <!-- Username Field -->
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                required
+            >
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+            >
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="menu-btn">
+            Register
+        </button>
+
+    </form>
+
+    <!-- Link to Login -->
+    <p class="form-footer">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login</a>
+    </p>
+
+</div>
+
+{% endblock %}

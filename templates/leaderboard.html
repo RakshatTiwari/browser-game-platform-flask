@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<!-- Leaderboard Page Container -->
+<div class="leaderboard-container">
+
+    <h2>Leaderboard</h2>
+
+    <!-- Scores Table -->
+    <table class="leaderboard-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in scores %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ score.username }}</td>
+                <td>{{ score.score }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">No scores yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Back to Menu -->
+    <div class="leaderboard-footer">
+        <a href="{{ url_for('index') }}" class="menu-btn">
+            Back to Menu
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
