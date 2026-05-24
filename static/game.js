@@ -14,10 +14,10 @@ const knightImg = new Image();
 knightImg.src = "/static/assets/knight.png";
 
 const dragon1Img = new Image();
-dragon1Img.src = "/static/assets/dragon1.png";
+dragon1Img.src = "/static/assets/dragon.png";
 
 const dragon2Img = new Image();
-dragon2Img.src = "/static/assets/dragon2.png";
+dragon2Img.src = "/static/assets/dragon.png";
 
 const coinImg = new Image();
 coinImg.src = "/static/assets/coin.png";

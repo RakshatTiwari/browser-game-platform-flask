@@ -165,7 +165,8 @@ GAME/
 │   ├── styles.css             # Global styles
 │   └── assets/                # Images and audio assets
 │       ├── knight.png
-│       ├── dragon.png
+│       ├── dragon1.png
+│       ├── dragon2.png
 │       ├── fireball.png
 │       ├── coin.png
 │       ├── bg_morning.png
