@@ -151,6 +151,8 @@ GAME/
 ├── app.py                     # Flask backend
 ├── schema.sql                 # SQLite database schema
 ├── .gitignore
+├── Knight_Warrior_Thumbnail.jpg
+├── requirements.txt
 ├── templates/
 │   ├── layout.html            # Base template
 │   ├── index.html             # Landing page
