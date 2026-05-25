@@ -5,6 +5,8 @@ const ctx = canvas.getContext("2d");
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    knight.y = groundY();
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
@@ -75,7 +77,10 @@ const knight = {
 
 // ================= DRAGONS =================
 const SKY_TOP = 40;
-const SKY_BOTTOM = canvas.height * 0.45;
+
+function getSkyBottom() {
+  return canvas.height * 0.45;
+}
 
 const DRAGON_MAX_HP = 3;
 const DRAGON_RESPAWN_TIME = 1200; // 20 seconds @ ~60 FPS
@@ -237,8 +242,8 @@ function updateDragons() {
 
         // Vertical hovering
         d.y += d.vy;
-        if (d.y < SKY_TOP || d.y > SKY_BOTTOM - d.height) {
-            d.vy *= -1;
+        if (d.y < SKY_TOP || d.y > getSkyBottom() - d.height) {
+          d.vy *= -1;
         }
 
         // Fire control
@@ -363,7 +368,7 @@ function drawDragons() {
         ctx.drawImage(d.img, d.x, d.y, d.width, d.height);
 
         // Sword-stroke counter
-        ctx.fillStyle = "##b026ff";
+        ctx.fillStyle = "#b026ff";
         ctx.font = "bold 24px Arial";
         ctx.textAlign = "center";
         ctx.shadowColor = "#00ffcc";
@@ -376,7 +381,8 @@ function drawDragons() {
         );
         ctx.textAlign = "left";
 
-        ctx.restore();
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = "transparent";
     });
 }
 
@@ -424,6 +430,7 @@ function drawGameOver() {
 }
 
 // ================= LOOP =================
+
 function gameLoop() {
     if (gameOver) {
         draw();
@@ -445,4 +452,26 @@ function gameLoop() {
 
     requestAnimationFrame(gameLoop);
 }
-gameLoop();
+
+const assets = [
+  knightImg,
+  dragon1Img,
+  dragon2Img,
+  coinImg,
+  fireballImg,
+  bgMorning,
+  bgEvening,
+  bgNight,
+];
+
+let loadedAssets = 0;
+
+assets.forEach((asset) => {
+  asset.onload = () => {
+    loadedAssets++;
+
+    if (loadedAssets === assets.length) {
+      gameLoop();
+    }
+  };
+});
