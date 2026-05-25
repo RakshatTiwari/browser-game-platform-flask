@@ -8,7 +8,6 @@ function resizeCanvas() {
 
   knight.y = groundY();
 }
-resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 // ================= ASSETS =================
