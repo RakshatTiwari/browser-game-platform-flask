@@ -453,25 +453,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-const assets = [
-  knightImg,
-  dragon1Img,
-  dragon2Img,
-  coinImg,
-  fireballImg,
-  bgMorning,
-  bgEvening,
-  bgNight,
-];
-
-let loadedAssets = 0;
-
-assets.forEach((asset) => {
-  asset.onload = () => {
-    loadedAssets++;
-
-    if (loadedAssets === assets.length) {
-      gameLoop();
-    }
-  };
-});
+window.onload = () => {
+  resizeCanvas();
+  gameLoop();
+};
