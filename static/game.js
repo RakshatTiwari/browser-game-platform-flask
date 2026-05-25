@@ -461,21 +461,29 @@ const assets = [
   bgNight,
 ];
 
-let loadedAssets = 0;
+Promise.all(
+  assets.map((asset) => {
+    return new Promise((resolve) => {
+      if (asset.complete) {
+        console.log("Cached:", asset.src);
+        resolve();
+      } else {
+        asset.onload = () => {
+          console.log("Loaded:", asset.src);
+          resolve();
+        };
 
-assets.forEach((asset) => {
-  asset.onload = () => {
-    loadedAssets++;
-    console.log("Loaded:", asset.src);
+        asset.onerror = () => {
+          console.error("FAILED:", asset.src);
+          resolve();
+        };
+      }
+    });
+  }),
+).then(() => {
+  console.log("ALL ASSETS READY");
 
-    if (loadedAssets === assets.length) {
-      console.log("ALL ASSETS LOADED");
-      resizeCanvas();
-      gameLoop();
-    }
-  };
+  resizeCanvas();
 
-  asset.onerror = () => {
-    console.error("FAILED:", asset.src);
-  };
+  requestAnimationFrame(gameLoop);
 });
