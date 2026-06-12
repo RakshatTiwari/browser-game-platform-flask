@@ -1,8 +1,3 @@
-"""
-Knight Warrior - CS50 Final Project
-Main Flask backend file (minimal & sufficient)
-"""
-
 import sqlite3
 from flask import Flask, render_template, request, redirect, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -161,4 +156,4 @@ def leaderboard():
 # --------------------------------------------------
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)

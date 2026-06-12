@@ -1,23 +1,31 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<body class="landing">
 
-<!-- Landing Page Container -->
-<div class="menu-container">
+    <div class="overlay">
 
-    <!-- Game Title -->
-    <h1 class="game-title">Knight Warrior</h1>
+        <h1 class="game-title">Knight Warrior</h1>
 
-    <!-- Main Actions -->
-    <div class="menu-buttons">
-        <a href="{{ url_for('game') }}" class="menu-btn">Play Game</a>
-        <a href="{{ url_for('leaderboard') }}" class="menu-btn">Leaderboard</a>
-        <a href="{{ url_for('login') }}" class="menu-btn">Login</a>
-        <a href="{{ url_for('register') }}" class="menu-btn secondary">
-            Register (New Player)
-        </a>
+        <div class="menu">
+            <a href="{{ url_for('game') }}" class="btn primary">
+                ▶ Play Game
+            </a>
+
+            <a href="{{ url_for('leaderboard') }}" class="btn">
+                🏆 Leaderboard
+            </a>
+
+            <a href="{{ url_for('login') }}" class="btn">
+                🔐 Login
+            </a>
+
+            <a href="{{ url_for('register') }}" class="btn secondary">
+                Register (New Player)
+            </a>
+        </div>
+
     </div>
 
-</div>
-
+</body>
 {% endblock %}

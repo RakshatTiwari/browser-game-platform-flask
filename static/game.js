@@ -5,9 +5,8 @@ const ctx = canvas.getContext("2d");
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-
-  knight.y = groundY();
 }
+resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 // ================= ASSETS =================
@@ -76,10 +75,7 @@ const knight = {
 
 // ================= DRAGONS =================
 const SKY_TOP = 40;
-
-function getSkyBottom() {
-  return canvas.height * 0.45;
-}
+const SKY_BOTTOM = canvas.height * 0.45;
 
 const DRAGON_MAX_HP = 3;
 const DRAGON_RESPAWN_TIME = 1200; // 20 seconds @ ~60 FPS
@@ -238,7 +234,7 @@ function updateDragons() {
 
     // Vertical hovering
     d.y += d.vy;
-    if (d.y < SKY_TOP || d.y > getSkyBottom() - d.height) {
+    if (d.y < SKY_TOP || d.y > SKY_BOTTOM - d.height) {
       d.vy *= -1;
     }
 
@@ -364,7 +360,7 @@ function drawDragons() {
     ctx.drawImage(d.img, d.x, d.y, d.width, d.height);
 
     // Sword-stroke counter
-    ctx.fillStyle = "#b026ff";
+    ctx.fillStyle = "##b026ff";
     ctx.font = "bold 24px Arial";
     ctx.textAlign = "center";
     ctx.shadowColor = "#00ffcc";
@@ -373,8 +369,7 @@ function drawDragons() {
     ctx.fillText(`Hits left: ${d.hp}`, d.x + d.width / 2, d.y - 10);
     ctx.textAlign = "left";
 
-    ctx.shadowBlur = 0;
-    ctx.shadowColor = "transparent";
+    ctx.restore();
   });
 }
 
@@ -426,7 +421,6 @@ function drawGameOver() {
 }
 
 // ================= LOOP =================
-
 function gameLoop() {
   if (gameOver) {
     draw();
@@ -448,41 +442,4 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
-
-const assets = [
-  knightImg,
-  dragon1Img,
-  dragon2Img,
-  coinImg,
-  fireballImg,
-  bgMorning,
-  bgEvening,
-  bgNight,
-];
-
-Promise.all(
-  assets.map((asset) => {
-    return new Promise((resolve) => {
-      if (asset.complete) {
-        console.log("Cached:", asset.src);
-        resolve();
-      } else {
-        asset.onload = () => {
-          console.log("Loaded:", asset.src);
-          resolve();
-        };
-
-        asset.onerror = () => {
-          console.error("FAILED:", asset.src);
-          resolve();
-        };
-      }
-    });
-  }),
-).then(() => {
-  console.log("ALL ASSETS READY");
-
-  resizeCanvas();
-
-  requestAnimationFrame(gameLoop);
-});
+gameLoop();

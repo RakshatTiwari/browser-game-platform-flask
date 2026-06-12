@@ -1,7 +1,3 @@
--- Knight Warrior - Database Schema
--- CS50 Final Project
--- SQLite database structure
-
 -- --------------------------------------------------
 -- USERS TABLE
 -- Stores registered users
