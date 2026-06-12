@@ -4,47 +4,48 @@
 
 <!-- Registration Page Container -->
 <div class="form-container">
+  <h2>Register</h2>
 
-    <h2>Register</h2>
+  <!-- Error Message -->
+  {% if error %}
+  <div class="error-message">{{ error }}</div>
+  {% endif %}
 
-    <!-- Registration Form -->
-    <form method="POST" action="{{ url_for('register') }}">
+  <!-- Registration Form -->
+  <form method="POST" action="{{ url_for('register') }}">
+    <!-- Username Field -->
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required />
+    </div>
 
-        <!-- Username Field -->
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input
-                type="text"
-                id="username"
-                name="username"
-                required
-            >
-        </div>
+    <!-- Password Field -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+    </div>
 
-        <!-- Password Field -->
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                required
-            >
-        </div>
+    <!-- Confirm Password Field -->
+    <div class="form-group">
+        <label for="confirmation">Confirm Password</label>
 
-        <!-- Submit Button -->
-        <button type="submit" class="menu-btn">
-            Register
-        </button>
+        <input
+            type="password"
+            id="confirmation"
+            name="confirmation"
+            required
+        >
+    </div>
 
-    </form>
+    <!-- Submit Button -->
+    <button type="submit" class="menu-btn">Register</button>
+  </form>
 
-    <!-- Link to Login -->
-    <p class="form-footer">
-        Already have an account?
-        <a href="{{ url_for('login') }}">Login</a>
-    </p>
-
+  <!-- Link to Login -->
+  <p class="form-footer">
+    Already have an account?
+    <a href="{{ url_for('login') }}">Login</a>
+  </p>
 </div>
 
 {% endblock %}

@@ -1,157 +1,315 @@
+import os
 import sqlite3
-from flask import Flask, render_template, request, redirect, session, url_for
-from werkzeug.security import generate_password_hash, check_password_hash
 
-# --------------------------------------------------
-# APP CONFIGURATION
-# --------------------------------------------------
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    session,
+    url_for
+)
+
+from werkzeug.security import (
+    generate_password_hash,
+    check_password_hash
+)
 
 app = Flask(__name__)
-app.secret_key = "knight-warrior-secret"
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "change-this-secret-key"
+)
 
 DATABASE = "project.db"
 
-# --------------------------------------------------
-# DATABASE CONNECTION HELPER
-# --------------------------------------------------
+
+# -------------------------------
+# DATABASE HELPERS
+# -------------------------------
 
 def get_db():
-    """Connect to SQLite database."""
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
-# --------------------------------------------------
-# ROUTES
-# --------------------------------------------------
+
+def init_db():
+
+    conn = sqlite3.connect(DATABASE)
+
+    with open("schema.sql", "r") as f:
+        conn.executescript(f.read())
+
+    conn.commit()
+    conn.close()
+
+
+if not os.path.exists(DATABASE):
+    init_db()
+
+
+# -------------------------------
+# HOME
+# -------------------------------
 
 @app.route("/")
 def index():
-    """Landing page."""
-    return render_template("index.html")
 
+    user = session.get("username")
+
+    return render_template(
+        "index.html",
+        user=user
+    )
+
+
+# -------------------------------
+# REGISTER
+# -------------------------------
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """User registration."""
+
     if request.method == "POST":
+
         username = request.form.get("username")
         password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
 
-        if not username or not password:
-            return "Missing username or password"
+        if not username:
+            return render_template(
+                "register.html",
+                error="Username required"
+            )
+
+        if not password:
+            return render_template(
+                "register.html",
+                error="Password required"
+            )
+
+        if password != confirmation:
+            return render_template(
+                "register.html",
+                error="Passwords do not match"
+            )
 
         db = get_db()
-        cur = db.cursor()
 
-        # Check if user already exists
-        cur.execute("SELECT id FROM users WHERE username = ?", (username,))
-        if cur.fetchone():
+        existing = db.execute(
+            "SELECT id FROM users WHERE username = ?",
+            (username,)
+        ).fetchone()
+
+        if existing:
+
             db.close()
-            return "User already exists"
 
-        # Store hashed password
-        hashed = generate_password_hash(password)
-        cur.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)",
-            (username, hashed)
+            return render_template(
+                "register.html",
+                error="Username already exists"
+            )
+
+        hashed_password = generate_password_hash(
+            password
+        )
+
+        db.execute(
+            """
+            INSERT INTO users
+            (username, password)
+            VALUES (?, ?)
+            """,
+            (username, hashed_password)
         )
 
         db.commit()
         db.close()
 
-        return redirect(url_for("login"))
+        return redirect(
+            url_for("login")
+        )
 
-    return render_template("register.html")
+    return render_template(
+        "register.html"
+    )
 
+
+# -------------------------------
+# LOGIN
+# -------------------------------
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """User login."""
+
     if request.method == "POST":
+
         username = request.form.get("username")
         password = request.form.get("password")
 
         db = get_db()
-        cur = db.cursor()
 
-        cur.execute("SELECT * FROM users WHERE username = ?", (username,))
-        user = cur.fetchone()
+        user = db.execute(
+            """
+            SELECT *
+            FROM users
+            WHERE username = ?
+            """,
+            (username,)
+        ).fetchone()
+
         db.close()
 
-        if user and check_password_hash(user["password"], password):
-            session["user_id"] = user["id"]
-            session["username"] = user["username"]
-            return redirect(url_for("index"))
+        if not user:
 
-        return "Invalid username or password"
+            return render_template(
+                "login.html",
+                error="Invalid username or password"
+            )
 
-    return render_template("login.html")
+        if not check_password_hash(
+            user["password"],
+            password
+        ):
 
+            return render_template(
+                "login.html",
+                error="Invalid username or password"
+            )
+
+        session["user_id"] = user["id"]
+        session["username"] = user["username"]
+
+        return redirect(
+            url_for("game")
+        )
+
+    return render_template(
+        "login.html"
+    )
+
+
+# -------------------------------
+# LOGOUT
+# -------------------------------
 
 @app.route("/logout")
 def logout():
-    """Logout user."""
-    session.clear()
-    return redirect(url_for("index"))
 
+    session.clear()
+
+    return redirect(
+        url_for("index")
+    )
+
+
+# -------------------------------
+# GAME PAGE
+# -------------------------------
 
 @app.route("/game")
 def game():
-    """Game page (login required)."""
+
     if "user_id" not in session:
-        return redirect(url_for("login"))
 
-    return render_template("game.html")
+        return redirect(
+            url_for("login")
+        )
 
+    return render_template(
+        "game.html"
+    )
+
+
+# -------------------------------
+# SAVE SCORE
+# -------------------------------
 
 @app.route("/save_score", methods=["POST"])
 def save_score():
-    """Save score after game over."""
+
     if "user_id" not in session:
         return redirect(url_for("login"))
 
-    score = request.form.get("score")
-    if score is None:
-        return redirect(url_for("game"))
+    try:
+        score = int(
+            request.form.get(
+                "score",
+                0
+            )
+        )
+    except ValueError:
+        score = 0
+
+    score = max(
+        0,
+        min(score, 999999)
+    )
 
     db = get_db()
-    cur = db.cursor()
 
-    cur.execute(
-        "INSERT INTO scores (user_id, score) VALUES (?, ?)",
-        (session["user_id"], score)
+    db.execute(
+        """
+        INSERT INTO scores
+        (
+            user_id,
+            score
+        )
+        VALUES (?, ?)
+        """,
+        (
+            session["user_id"],
+            score
+        )
     )
 
     db.commit()
     db.close()
 
-    return redirect(url_for("leaderboard"))
+    return redirect(
+        url_for("leaderboard")
+    )
 
+# -------------------------------
+# LEADERBOARD
+# -------------------------------
 
 @app.route("/leaderboard")
 def leaderboard():
-    """Show top scores."""
+
     db = get_db()
-    cur = db.cursor()
 
-    cur.execute("""
-        SELECT users.username, scores.score
+    scores = db.execute(
+        """
+        SELECT
+            users.username,
+            MAX(scores.score) AS score
+
         FROM scores
-        JOIN users ON scores.user_id = users.id
-        ORDER BY scores.score DESC
-        LIMIT 10
-    """)
 
-    scores = cur.fetchall()
+        JOIN users
+        ON users.id = scores.user_id
+
+        GROUP BY users.id
+
+        ORDER BY score DESC
+
+        LIMIT 10
+        """
+    ).fetchall()
+
     db.close()
 
-    return render_template("leaderboard.html", scores=scores)
+    return render_template(
+        "leaderboard.html",
+        scores=scores
+    )
 
 
-# --------------------------------------------------
-# RUN APPLICATION
-# --------------------------------------------------
+# -------------------------------
+# RUN
+# -------------------------------
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,31 +1,32 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<body class="landing">
+<div class="landing-wrapper" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh;">
+  <div class="overlay">
+    <h1 class="game-title">Knight Warrior</h1>
 
-    <div class="overlay">
+    <div class="menu">
+      {% if user %}
+      <a href="{{ url_for('game') }}" class="btn primary"> ⚔️ Play Game </a>
 
-        <h1 class="game-title">Knight Warrior</h1>
+      <a href="{{ url_for('leaderboard') }}" class="btn"> 🏆 Leaderboard </a>
 
-        <div class="menu">
-            <a href="{{ url_for('game') }}" class="btn primary">
-                ▶ Play Game
-            </a>
+      <a href="{{ url_for('logout') }}" class="btn secondary">
+        🚪 Logout ({{ user }})
+      </a>
+      {% else %}
+      <a href="{{ url_for('login') }}" class="btn primary">
+        🔐 Login to Play
+      </a>
 
-            <a href="{{ url_for('leaderboard') }}" class="btn">
-                🏆 Leaderboard
-            </a>
+      <a href="{{ url_for('leaderboard') }}" class="btn"> 🏆 Leaderboard </a>
 
-            <a href="{{ url_for('login') }}" class="btn">
-                🔐 Login
-            </a>
-
-            <a href="{{ url_for('register') }}" class="btn secondary">
-                Register (New Player)
-            </a>
-        </div>
-
+      <a href="{{ url_for('register') }}" class="btn secondary">
+        📝 Register (New Player)
+      </a>
+      {% endif %}
     </div>
+  </div>
+</div>
 
-</body>
 {% endblock %}

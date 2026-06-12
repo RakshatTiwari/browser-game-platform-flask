@@ -12,35 +12,49 @@ window.addEventListener("resize", resizeCanvas);
 // ================= ASSETS =================
 const knightImg = new Image();
 knightImg.src = "/static/assets/knight.png";
+knightImg.onerror = () => console.warn("Failed to load knight image");
 
 const dragon1Img = new Image();
 dragon1Img.src = "/static/assets/dragon1.png";
+dragon1Img.onerror = () => console.warn("Failed to load dragon1 image");
 
 const dragon2Img = new Image();
 dragon2Img.src = "/static/assets/dragon2.png";
+dragon2Img.onerror = () => console.warn("Failed to load dragon2 image");
 
 const coinImg = new Image();
 coinImg.src = "/static/assets/coin.png";
+coinImg.onerror = () => console.warn("Failed to load coin image");
 
 const fireballImg = new Image();
 fireballImg.src = "/static/assets/fireball.png";
+fireballImg.onerror = () => console.warn("Failed to load fireball image");
 
 const bgMorning = new Image();
 bgMorning.src = "/static/assets/bg_morning.png";
+bgMorning.onerror = () => console.warn("Failed to load bg_morning image");
 
 const bgEvening = new Image();
 bgEvening.src = "/static/assets/bg_evening.png";
+bgEvening.onerror = () => console.warn("Failed to load bg_evening image");
 
 const bgNight = new Image();
 bgNight.src = "/static/assets/bg_night.png";
+bgNight.onerror = () => console.warn("Failed to load bg_night image");
 
 // ================= AUDIO =================
 const bgm1 = new Audio("/static/assets/bgm1.mp3");
 const bgm2 = new Audio("/static/assets/bgm2.mp3");
+const gameOverAudio = new Audio("/static/assets/game_over.mp3");
 bgm1.loop = true;
 bgm2.loop = true;
 bgm1.volume = 0.5;
 bgm2.volume = 0.5;
+gameOverAudio.volume = 0.7;
+
+bgm1.onerror = () => console.warn("Failed to load bgm1");
+bgm2.onerror = () => console.warn("Failed to load bgm2");
+gameOverAudio.onerror = () => console.warn("Failed to load game over audio");
 
 window.addEventListener("load", () => {
   bgm1.play().catch(() => {});
@@ -78,7 +92,7 @@ const SKY_TOP = 40;
 const SKY_BOTTOM = canvas.height * 0.45;
 
 const DRAGON_MAX_HP = 3;
-const DRAGON_RESPAWN_TIME = 1200; // 20 seconds @ ~60 FPS
+const DRAGON_RESPAWN_TIME = 600; // 20 seconds @ ~60 FPS
 
 const dragons = [
   {
@@ -311,6 +325,7 @@ function checkCollisions() {
         gameOver = true;
         bgm1.pause();
         bgm2.pause();
+        gameOverAudio.play().catch(() => {});
       }
     }
   });
@@ -348,8 +363,12 @@ function drawUI() {
   ctx.fillRect(30, 30, 200, 18);
   ctx.fillStyle = "green";
   ctx.fillRect(30, 30, Math.max(0, health) * 2, 18);
-
-  ctx.fillStyle = "#fff";
+  
+  // Score
+  ctx.font = "bold 25px Arial";
+  ctx.fillStyle = "#3d0696";
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 3;
   ctx.fillText(`Score: ${score}`, canvas.width - 160, 40);
 }
 
@@ -360,11 +379,11 @@ function drawDragons() {
     ctx.drawImage(d.img, d.x, d.y, d.width, d.height);
 
     // Sword-stroke counter
-    ctx.fillStyle = "##b026ff";
-    ctx.font = "bold 24px Arial";
+    ctx.fillStyle = "#6950f7";
+    ctx.font = "bold 32px Arial";
     ctx.textAlign = "center";
-    ctx.shadowColor = "#00ffcc";
-    ctx.shadowBlur = 15;
+    ctx.shadowColor = "#3c3633";
+    ctx.shadowBlur = 2;
 
     ctx.fillText(`Hits left: ${d.hp}`, d.x + d.width / 2, d.y - 10);
     ctx.textAlign = "left";
@@ -421,10 +440,21 @@ function drawGameOver() {
 }
 
 // ================= LOOP =================
+let gameOverSubmitted = false;
+
 function gameLoop() {
   if (gameOver) {
     draw();
     drawGameOver();
+
+    // Submit score after game over
+    if (!gameOverSubmitted) {
+      gameOverSubmitted = true;
+      setTimeout(() => {
+        document.getElementById("finalScore").value = score;
+        document.getElementById("scoreForm").submit();
+      }, 2000); // 2 second delay to show game over screen
+    }
     return;
   }
 
@@ -442,4 +472,7 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
-gameLoop();
+
+window.onload = () => {
+  gameLoop();
+};
