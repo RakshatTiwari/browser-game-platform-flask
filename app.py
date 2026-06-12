@@ -18,7 +18,7 @@ from werkzeug.security import (
 app = Flask(__name__)
 app.secret_key = os.environ.get(
     "SECRET_KEY",
-    "change-this-secret-key"
+    "knight-warrior-secret-key"
 )
 
 DATABASE = "project.db"
