@@ -203,6 +203,10 @@ If the project were to be extended further, potential improvements include addin
 
 ---
 
+## Live Demo
+
+https://browser-game-platform-flask.onrender.com
+
 ## Author
 
 **Rakshat Tiwari**
