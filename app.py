@@ -11,7 +11,6 @@ app.secret_key = "knight-warrior-secret"
 
 DATABASE = "project.db"
 
-
 # --------------------------------------------------
 # DATABASE CONNECTION HELPER
 # --------------------------------------------------
