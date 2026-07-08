@@ -30,7 +30,9 @@ Developed without any external game engine or frontend framework, all core gamep
 
 ---
 
-## 🌍 Live Demo
+## 🌐 Live Demo
+
+🔗 **Try the application here:**
 
 https://browser-game-platform-flask.onrender.com
 
@@ -44,6 +46,54 @@ https://browser-game-platform-flask.onrender.com
 - Integrated SQLite for persistent user accounts and leaderboard storage.
 - Created a dynamic leaderboard with player rankings.
 - Deployed the application on Render for public access.
+
+---
+
+## 📸 Application Preview
+
+Explore the complete user journey of **Knight Warrior**, from secure authentication to real-time gameplay and persistent score tracking.
+
+### 🔐 Authentication
+
+The game features a secure authentication system built with **Flask**, **Werkzeug Security**, and **SQLite**, allowing players to create accounts, securely log in, and maintain personalized game sessions.
+
+<table align="center">
+<tr>
+<td align="center">
+<b>🔐 Login Page</b><br><br>
+<img src="Images/Login_Page.png" width="450" height="250">
+</td>
+
+<td align="center">
+<b>📝 Register Page</b><br><br>
+<img src="Images/Register_Page.png" width="450" height="250">
+</td>
+</tr>
+</table>
+
+### 🏰 Main Menu
+
+The interactive home screen serves as the central navigation hub, allowing players to log in, register, and access the global leaderboard before entering the game.
+
+<p align="center">
+<img src="Images/Main_Menu.png" width="900" height="500">
+</p>
+
+### 🎮 Gameplay
+
+Experience fast-paced browser gameplay featuring **HTML5 Canvas** rendering, player movement, enemy AI, projectile attacks, collision detection, health management, collectibles, and real-time score tracking.
+
+<p align="center">
+<img src="Images/Gameplay.png" width="900" height="500">
+</p>
+
+### 🏆 Leaderboard
+
+Player scores are securely stored in an **SQLite** database and displayed through a dynamic leaderboard, enabling persistent rankings and competitive gameplay across multiple sessions.
+
+<p align="center">
+<img src="Images/Leaderboard.png" width="900" height="500">
+</p>
 
 ---
 
@@ -81,7 +131,7 @@ https://browser-game-platform-flask.onrender.com
                                 Dynamic Leaderboard
 ```
 
-## Features
+## ✨ Features
 
 ### ⚔️ Gameplay Features
 
@@ -228,10 +278,10 @@ git clone https://github.com/RakshatTiwari/browser-game-platform-flask.git
 cd browser-game-platform-flask
 ```
 
-### Install Flask:
+### Install requirements:
 
 ```bash
-pip install flask
+pip install -r requirements.txt
 ```
 
 ### Initialize database:
