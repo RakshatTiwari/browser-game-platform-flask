@@ -1,71 +1,89 @@
-## Overview
+<div align="center">
 
-**Knight Warrior** is a 2D browser-based action game developed as my **CS50 Final Project** using **JavaScript**, **HTML5 Canvas**, **CSS**, and a **Flask backend**. The project combines real-time gameplay with a simple but secure authentication system and a persistent leaderboard backed by a relational database.
+# ⚔️ Knight Warrior
 
-In the game, the player controls a knight character who must survive in a hostile environment filled with enemies and projectile attacks. The goal is straightforward: stay alive for as long as possible, defeat enemies, and score points. Once the game ends, the final score is submitted to the backend and stored in a database, where it appears on a leaderboard alongside scores from other registered users.
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Poppins&weight=600&size=25&pause=1200&color=36BCF7&center=true&vCenter=true&width=1100&lines=Knight+Warrior+-+2D+Browser+Action+Game;Built+using+Python%2C+Flask%2C+JavaScript%2C+HTML5+Canvas+%26+CSS3;SQLite+Database+%7C+Jinja2+Templates+%7C+Werkzeug+Security;Real-Time+Gameplay+%7C+Collision+Detection+%7C+Session+Authentication;Persistent+Leaderboard+%7C+Render+Deployment)](https://git.io/typing-svg)
 
-This project was intentionally built **without using any external game engines or frontend frameworks**. Instead of relying on abstractions, I wanted to work directly with core technologies like the Canvas API, vanilla JavaScript, and Flask. This made the project more challenging, but also much more educational and easier to explain from a conceptual standpoint.
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-Web%20Framework-000000?style=flat-square&logo=flask&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![HTML5 Canvas](https://img.shields.io/badge/HTML5-Canvas-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Styling-1572B6?style=flat-square&logo=css3&logoColor=white)
+![Jinja2](https://img.shields.io/badge/Jinja2-Templating-B41717?style=flat-square)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=flat-square&logo=sqlite&logoColor=white)
+![Werkzeug](https://img.shields.io/badge/Werkzeug-Security-6DB33F?style=flat-square)
+![Render](https://img.shields.io/badge/Render-Deployment-46E3B7?style=flat-square&logo=render&logoColor=white)
+![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?style=flat-square&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github&logoColor=white)
 
-> **Note:**
-> The focus of this project is not just gameplay, but also clean architecture, security, and clarity.
+</div>
 
----
-
-## Installation
-
-Clone repository:
-
-```bash
-git clone https://github.com/RakshatTiwari/browser-game-platform-flask.git
-```
-
-Move into folder:
-
-```bash
-cd browser-game-platform-flask
-```
-
-Install Flask:
-
-```bash
-pip install flask
-```
-
-Initialize database:
-
-```bash
-sqlite3 project.db < schema.sql
-```
-
-Run application:
-
-```bash
-python app.py
-```
-
-Open browser:
-
-```
-http://127.0.0.1:5000
-```
+> ### A Full-Stack Browser-Based Action Game built using HTML5 Canvas, JavaScript, Flask & SQLite
 
 ---
 
-## Concepts Demonstrated
+## 📌 Project Overview
 
-- Full Stack Web Development
-- Authentication and Session Management
-- Database Design and Persistence
-- Collision Detection and Game Logic
-- Frontend and Backend Integration
-- Secure Password Hashing
-- Object-Oriented Programming Concepts
+**Knight Warrior** is a full-stack 2D browser-based action game that combines real-time gameplay with secure user authentication, session management, and a persistent SQLite leaderboard. Built using **HTML5 Canvas, JavaScript, Python (Flask), and SQLite**, the project demonstrates the integration of frontend game development with backend web application architecture.
+
+Developed without any external game engine or frontend framework, all core gameplay mechanics—including rendering, player movement, gravity, collision detection, enemy behavior, and score tracking—were implemented from scratch, while the Flask backend manages authentication, database operations, and secure score persistence.
 
 ---
+
+## 🌍 Live Demo
+
+https://browser-game-platform-flask.onrender.com
+
+---
+
+## 🎮 Project Highlights
+
+- Built a complete browser-based 2D action game without using any game engine.
+- Implemented real-time gameplay using HTML5 Canvas and vanilla JavaScript.
+- Developed a secure authentication system with Flask sessions and password hashing.
+- Integrated SQLite for persistent user accounts and leaderboard storage.
+- Created a dynamic leaderboard with player rankings.
+- Deployed the application on Render for public access.
+
+---
+
+## 🛠️ Technology Stack
+
+| Component | Technology |
+|-----------|------------|
+| Frontend | JavaScript (ES6), HTML5 Canvas, CSS3 |
+| Backend | Python (Flask) |
+| Templating | Jinja2 |
+| Database | SQLite |
+| Security  | Werkzeug (password hashing) |
+| Deployment | Render |
+
+---
+
+## 🏗️ Application Architecture
+
+```text
+                                     Player
+                                        │
+                                        ▼
+                            HTML5 Canvas + JavaScript
+                                        │
+                            Real-Time Gameplay Engine
+                                        │
+                                        ▼
+                                   Flask Backend
+                        (Authentication & Score Handling)
+                                        │
+                                        ▼
+                                  SQLite Database
+                                        │
+                                        ▼
+                                Dynamic Leaderboard
+```
 
 ## Features
 
-### Gameplay Features
+### ⚔️ Gameplay Features
 
 - Real-time 2D gameplay rendered using **HTML5 Canvas**
 - Keyboard-controlled knight character
@@ -78,7 +96,7 @@ http://127.0.0.1:5000
 
 The gameplay logic is handled entirely on the client side using JavaScript. This includes rendering, physics updates, enemy behavior, and collision checks. The backend does not interfere with gameplay, which keeps the game responsive and smooth.
 
-### Web Application Features
+### 🌐 Web Application Features
 
 - User registration and login system
 - Secure password hashing using **Werkzeug**
@@ -88,7 +106,7 @@ The gameplay logic is handled entirely on the client side using JavaScript. This
 - Dynamic leaderboard displaying the top scores
 - Graceful handling of cases where no scores exist yet
 
-### UI and UX Features
+### 🎨 UI and UX Features
 
 - Dark-themed interface to improve gameplay visibility
 - Full-screen responsive game canvas
@@ -98,7 +116,7 @@ The gameplay logic is handled entirely on the client side using JavaScript. This
 
 ---
 
-## How the Game and Application Work
+## ⚙️ Application Flow
 
 The application begins with a landing page that serves as the main entry point. From here, users can register for a new account, log in, view the leaderboard, or start the game. Registration and login are handled entirely by the backend using Flask, with passwords securely hashed before storage.
 
@@ -112,21 +130,7 @@ This design keeps gameplay fast and responsive while still allowing persistent s
 
 ---
 
-## Technology Stack
-
-| Component | Technology                           |
-|-----------|--------------------------------------|
-| Frontend  | JavaScript (ES6), HTML5 Canvas, CSS3 |
-| Backend   | Python (Flask)                       |
-| Templating| Jinja2                               |
-| Database  | SQLite                               |
-| Security  | Werkzeug (password hashing)          |
-
-Each technology was chosen for simplicity and clarity. Flask and SQLite are lightweight technologies well-suited for rapid backend development and academic full-stack applications.
-
----
-
-## Authentication, Security, and Sessions
+## 🔐 Authentication, Security, and Sessions
 
 User authentication is an important part of the project and is handled entirely on the server side. New users can register by choosing a username and password. The password is hashed using **Werkzeug** before being stored in the database, ensuring that no plaintext passwords are ever saved.
 
@@ -136,7 +140,7 @@ Logging out clears the session and returns the user to the landing page. At no p
 
 ---
 
-## Database and Data Storage
+## 🗄️ Database and Data Storage
 
 The project uses a lightweight **SQLite** database with two tables: one for users and one for scores. The users table stores usernames and hashed passwords, while the scores table stores completed game scores along with a reference to the user who achieved them and a timestamp.
 
@@ -144,10 +148,39 @@ This relational design allows multiple scores to be associated with a single use
 
 ---
 
-## Project Structure
+## 🔄 Application Workflow
 
 ```text
-GAME/
+                                    Register
+                                        │
+                                        ▼
+                                      Login
+                                        │
+                                        ▼
+                                    Play Game
+                                        │
+                                        ▼
+                                  Generate Score
+                                        │
+                                        ▼
+                                  Submit Score
+                                        │
+                                        ▼
+                                   Flask Backend
+                                        │
+                                        ▼
+                                  SQLite Database
+                                        │
+                                        ▼
+                                   Leaderboard
+
+```
+---
+
+## 📂 Project Structure
+
+```text
+browser-game-platform-flask/
 ├── app.py                     # Flask backend
 ├── schema.sql                 # SQLite database schema
 ├── .gitignore
@@ -181,7 +214,47 @@ GAME/
 
 ---
 
-## Styling and Visual Design
+## 🚀 Installation
+
+### Clone repository:
+
+```bash
+git clone https://github.com/RakshatTiwari/browser-game-platform-flask.git
+```
+
+### Move into folder:
+
+```bash
+cd browser-game-platform-flask
+```
+
+### Install Flask:
+
+```bash
+pip install flask
+```
+
+### Initialize database:
+
+```bash
+sqlite3 project.db < schema.sql
+```
+
+### Run application:
+
+```bash
+python app.py
+```
+
+### Open browser:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## 🪄 Styling and Visual Design
 
 The application uses a dark-themed design to improve gameplay visibility and reduce distraction. Styling is handled through a centralized CSS file, which defines reusable components such as buttons, forms, and layout containers.
 
@@ -189,7 +262,7 @@ All images and audio assets are stored in a dedicated assets directory. These in
 
 ---
 
-## Future Improvements
+## 💡 Future Improvements
 
 Like any project of limited scope, **Knight Warrior** has some known limitations. The game is designed primarily for desktop browsers and does not currently support mobile or touch controls. There is no pause or save system, and the game state resets if the page is refreshed. Audio features are also relatively basic.
 
@@ -197,16 +270,14 @@ If the project were to be extended further, potential improvements include addin
 
 ---
 
-## Final Notes
+## 👨‍💻 Author
 
-**Knight Warrior** represents a complete and well-structured full-stack project that reflects my understanding of frontend game development, backend web development, database design, and secure authentication.
+**Rakshat Tiwari**
 
 ---
 
-## Live Demo
+<div align="center">
 
-https://browser-game-platform-flask.onrender.com
+### ⭐ If you found this project useful, consider giving it a Star!
 
-## Author
-
-**Rakshat Tiwari**
+</div>
